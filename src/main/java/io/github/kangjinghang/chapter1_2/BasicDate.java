@@ -1,6 +1,7 @@
 package io.github.kangjinghang.chapter1_2;
 
 import edu.princeton.cs.algs4.StdOut;
+import io.github.kangjinghang.chapter1_3.Queue;
 
 public class BasicDate {
 
@@ -12,6 +13,16 @@ public class BasicDate {
         month = m;
         day = d;
         year = y;
+    }
+
+    public BasicDate(String date) {
+        String[] s = date.split("\\/");
+        if (s.length != 3) {
+            throw new IllegalArgumentException("Arguments illegal: " + date);
+        }
+        month = Integer.parseInt(s[0]);
+        day = Integer.parseInt(s[1]);
+        year = Integer.parseInt(s[2]);
     }
 
     public int month() {
@@ -39,6 +50,20 @@ public class BasicDate {
         if (this.day != that.day) return false;
         if (this.month != that.month) return false;
         return this.year == that.year;
+    }
+
+    public static BasicDate[] readDates(String s) {
+        String[] dates = s.split(" ");
+        int n = dates.length;
+        Queue<BasicDate> q = new Queue<>();
+        for (String date : dates) {
+            q.enqueue(new BasicDate(date));
+        }
+        BasicDate[] result = new BasicDate[n];
+        for (int i = 0; i < n; i++) {
+            result[i] = q.dequeue();
+        }
+        return result;
     }
 
     // java-algs4 BasicDate.java 12 31 2023

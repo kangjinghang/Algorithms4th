@@ -1,6 +1,7 @@
 package io.github.kangjinghang.chapter1_2;
 
 import edu.princeton.cs.algs4.Date;
+import io.github.kangjinghang.chapter1_3.Queue;
 
 public class Transaction {
 
@@ -81,6 +82,25 @@ public class Transaction {
             return false;
         }
         return this.amount == that.amount;
+    }
+
+    public static Transaction[] readTransactions(String s) {
+        final String[] transactions = s.split("\n");
+        int n = transactions.length;
+        Queue<Transaction> q = new Queue<>();
+        for (String transaction : transactions) {
+            q.enqueue(new Transaction(transaction));
+        }
+        Transaction[] result = new Transaction[n];
+        for (int i = 0; i < n; i++) {
+            result[i] = q.dequeue();
+        }
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return who + " " + when + " " + amount;
     }
 
     public static void main(String[] args) {
